@@ -1,9 +1,11 @@
 # RawPrintService
-This is an ASPNet Core wrapper for https://github.com/tonyedgecombe/RawPrint
+This is an ASPNet Core wrapper for [RawPrint](https://github.com/tonyedgecombe/RawPrint)
 
 It should be installed as a Windows service using sc.exe:
 
-sc create RawPrint binPath= (path to published binaries) (options)
+  
+    sc create RawPrint binPath= (path to published binaries) (options)
+
 
 By default it runs on port 6801. You can change it editing the hosting.json file
 
