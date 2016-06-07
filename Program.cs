@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting.WindowsServices;
@@ -16,6 +13,8 @@ namespace RawPrintService
         public static void Main(string[] args)
         {
             var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            if (Debugger.IsAttached)
+                basePath = Directory.GetCurrentDirectory();
 
             var config = new ConfigurationBuilder()
                 .SetBasePath(basePath)
