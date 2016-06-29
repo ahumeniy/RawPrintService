@@ -25,7 +25,6 @@ namespace RawPrintService
                 .UseKestrel()
                 .UseConfiguration(config)
                 .UseContentRoot(basePath)
-                .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();
 

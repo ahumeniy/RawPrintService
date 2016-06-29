@@ -30,20 +30,29 @@ namespace RawPrintService.Controllers
         }
 
         [HttpPost]
-        public void Post([FromForm]string Title, IFormFile Data)
-        { 
+        public IActionResult Post([FromForm]string Title, IFormFile Data)
+        {
             var printer = new RawPrint.Printer();
+            try
+            {
+                var stream = Data.OpenReadStream();
 
-            var stream = Data.OpenReadStream();
+                byte[] binData = new byte[stream.Length];
+                stream.Read(binData, 0, (int)stream.Length);
+                stream.Seek(0, System.IO.SeekOrigin.Begin);
 
-            byte[] binData = new byte[stream.Length];
-            stream.Read(binData, 0, (int)stream.Length);
-            stream.Seek(0, System.IO.SeekOrigin.Begin);
 
-            printer.PrintRawStream(
-                Util.RawPrintSettings.Printer,
-                Data.OpenReadStream(),
-                Title, false);
+                printer.PrintRawStream(
+                    Util.RawPrintSettings.Printer,
+                    Data.OpenReadStream(),
+                    Title, false);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
     }
 }
